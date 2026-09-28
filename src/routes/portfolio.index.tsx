@@ -13,7 +13,7 @@ import {
 } from "@/lib/seo";
 import steel from "@/assets/steel-workshop.jpg";
 
-const TITLE = "Portofolio Gerobak & Fabrikasi — Karya Kreasi Bersama";
+const TITLE = "Portofolio Gerobak Usaha Jepara & Kudus — Karya Kreasi";
 const DESCRIPTION =
   "Arsip proyek Karya Kreasi Bersama: gerobak usaha custom, booth, kanopi, dan fabrikasi besi, lengkap dengan material dan tahun pengerjaan.";
 

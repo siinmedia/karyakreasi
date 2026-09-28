@@ -14,6 +14,16 @@ export const SITE_NAME = "Karya Kreasi Bersama";
 export const SITE_LOCATION = "Jepara, Jawa Tengah, Indonesia";
 export const DEFAULT_OG_IMAGE = "/og-image.jpg";
 
+/** Area layanan utama yang jadi target pencarian. */
+export const SERVICE_AREAS = [
+  "Jepara",
+  "Kudus",
+  "Pati",
+  "Demak",
+  "Rembang",
+  "Semarang",
+] as const;
+
 /** Profil usaha untuk schema.org LocalBusiness. */
 export const BUSINESS = {
   name: SITE_NAME,
@@ -83,9 +93,15 @@ export function localBusinessSchema(): JsonLd {
       addressRegion: BUSINESS.addressRegion,
       addressCountry: BUSINESS.addressCountry,
     },
-    areaServed: { "@type": "AdministrativeArea", name: "Jepara" },
+    areaServed: SERVICE_AREAS.map((name) => ({
+      "@type": "City",
+      name,
+    })),
     knowsAbout: [
+      "Pabrik gerobak Jepara",
+      "Pabrik gerobak Kudus",
       "Gerobak usaha custom",
+      "Paket usaha gerobak",
       "Booth dan container",
       "Kanopi dan struktur atap",
       "Gerbang dan pagar besi",
@@ -140,6 +156,100 @@ export function portfolioListSchema(
       position: index + 1,
       name: item.name,
       url: absoluteUrl(`/portfolio/${item.slug}`),
+    })),
+  };
+}
+
+/** Schema.org Service — untuk layanan pemesanan gerobak dan paket usaha. */
+export function gerobakServiceSchema(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}/pabrik-gerobak#service`,
+    name: "Pembuatan Gerobak Usaha Custom",
+    serviceType: "Fabrikasi gerobak usaha custom",
+    description:
+      "Pabrik gerobak usaha custom untuk wilayah Jepara, Kudus, dan sekitarnya. " +
+      "Menyediakan gerobak baru, paket usaha siap jualan, serta pembuatan sesuai ukuran dan desain.",
+    url: absoluteUrl("/pabrik-gerobak"),
+    provider: { "@type": "LocalBusiness", name: BUSINESS.name, url: SITE_URL },
+    areaServed: SERVICE_AREAS.map((name) => ({ "@type": "City", name })),
+    offers: PAKET_USAHA.map((paket) => ({
+      "@type": "Offer",
+      name: paket.name,
+      description: paket.description,
+      priceCurrency: "IDR",
+      availability: "https://schema.org/InStock",
+    })),
+  };
+}
+
+/**
+ * Daftar paket usaha gerobak.
+ *
+ * Dipakai bersama oleh halaman /pabrik-gerobak dan schema Offer supaya isi
+ * yang dilihat pengunjung sama dengan yang dibaca mesin pencari.
+ */
+export const PAKET_USAHA = [
+  {
+    name: "Paket Gerobak Kopi Susu",
+    description:
+      "Gerobak rangka besi dan panel kayu, meja sajian lipat, sekat penyimpanan, " +
+      "plus kelengkapan dasar untuk mulai berjualan kopi susu.",
+    includes: [
+      "Gerobak siap pakai ukuran standar",
+      "Meja sajian dan sekat penyimpanan",
+      "Finishing kayu atau panel ACP",
+      "Konsultasi tata letak alat seduh",
+    ],
+  },
+  {
+    name: "Paket Gerobak Makanan",
+    description:
+      "Gerobak makanan dengan area masak, rak bumbu, dan penyangga kompor yang " +
+      "dirancang mengikuti alur pesanan cepat.",
+    includes: [
+      "Meja kerja stainless food grade",
+      "Rak bumbu bertingkat",
+      "Penyangga kompor dan tabung gas",
+      "Rak piring bongkar-pasang",
+    ],
+  },
+  {
+    name: "Paket Booth Usaha",
+    description:
+      "Booth dan container usaha ukuran menyesuaikan lokasi, dengan panel tahan " +
+      "cuaca dan instalasi listrik yang siap dipakai.",
+    includes: [
+      "Booth panel ACP waterproof",
+      "Jendela servis geser",
+      "Instalasi listrik dan titik lampu",
+      "Ruang penyimpanan di belakang",
+    ],
+  },
+  {
+    name: "Paket Gerobak Keliling",
+    description:
+      "Gerobak ringan dengan roda besar untuk usaha keliling, dirancang agar " +
+      "mudah didorong dan cepat dibongkar-pasang.",
+    includes: [
+      "Rangka ringan hollow galvanis",
+      "Roda besar heavy duty",
+      "Kanopi pelindung hujan",
+      "Gelang pengait gelas dan peralatan",
+    ],
+  },
+] as const;
+
+/** Schema.org FAQPage — memakai daftar tanya-jawab yang tampil di halaman. */
+export function faqSchema(items: readonly (readonly [string, string])[]): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map(([question, answer]) => ({
+      "@type": "Question",
+      name: question,
+      acceptedAnswer: { "@type": "Answer", text: answer },
     })),
   };
 }

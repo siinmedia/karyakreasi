@@ -2,15 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, Menu, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { canonicalLink, jsonLdScript, localBusinessSchema, socialMeta } from "@/lib/seo";
+import { canonicalLink, faqSchema, jsonLdScript, localBusinessSchema, socialMeta } from "@/lib/seo";
 import hero from "@/assets/workshop-hero.jpg";
 import container from "@/assets/container-project.jpg";
 import canopy from "@/assets/canopy-project.jpg";
 import steel from "@/assets/steel-workshop.jpg";
 
-const TITLE = "Karya Kreasi Bersama — Workshop Fabrikasi Custom Jepara";
+const TITLE = "Pabrik Gerobak Usaha Jepara — Fabrikasi Custom & Booth";
 const DESCRIPTION =
-  "Workshop fabrikasi custom di Jepara untuk gerobak usaha, container, booth, kanopi, pagar, gerbang, dan struktur besi. Kirim ukuran atau referensi, kami kerjakan dari sketsa hingga berdiri.";
+  "Pabrik gerobak usaha di Jepara, melayani Kudus, Pati, dan Demak. Gerobak custom, paket usaha siap jualan, booth, kanopi, gerbang, dan struktur besi. Kirim ukuran, kami kerjakan.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
       ...socialMeta({ title: TITLE, description: DESCRIPTION, url: "/" }),
     ],
     links: [canonicalLink("/")],
-    scripts: [jsonLdScript(localBusinessSchema())],
+    scripts: [jsonLdScript(localBusinessSchema()), jsonLdScript(faqSchema(faqs as [string, string][]))],
   }),
   component: Home,
 });
@@ -96,6 +96,8 @@ function Home() {
     </div></section>
 
     <section id="layanan" className="mx-auto max-w-[1600px] px-5 py-20 md:px-10 md:py-28 lg:px-16"><div className="grid gap-10 lg:grid-cols-[.8fr_1.2fr] lg:gap-16"><div><Eyebrow>Layanan kami</Eyebrow><h2 className="mt-8 font-display text-[clamp(2.5rem,4.6vw,5rem)] font-medium uppercase leading-[1]">APA YANG<br />KAMI <span className="text-muted-foreground">BANGUN.</span></h2><p className="mt-7 max-w-[340px] text-sm leading-[1.8] text-muted-foreground">Solusi fabrikasi yang dimulai dari kebutuhan nyata, bukan dari bentuk yang seragam.</p></div><div><div className="relative mb-5 aspect-[1.55] overflow-hidden rounded-2xl bg-muted"><img src={services[activeService]?.image ?? hero} alt={`Ilustrasi layanan ${services[activeService]?.title ?? "fabrikasi"}`} loading="lazy" width={1200} height={1504} className="h-full w-full object-cover" /></div>{services.map((service, i) => <div key={service.title} className="border-t border-border"><Button variant="ghost" className="flex h-auto w-full justify-between rounded-none px-0 py-4 text-left hover:bg-transparent md:py-5" onClick={() => setActiveService(i)} aria-expanded={activeService === i}><span className="flex min-w-0 items-center gap-4 md:gap-7"><span className="font-display text-xs text-muted-foreground">0{i + 1}</span><span className="font-display text-xl font-medium uppercase md:text-3xl">{service.title}</span></span><span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary"><Plus size={16} className={activeService === i ? "rotate-45 transition-transform" : "transition-transform"} /></span></Button>{activeService === i && <p className="max-w-[460px] pb-5 pl-9 text-sm leading-relaxed text-muted-foreground md:pl-12">{service.detail}</p>}</div>)}</div></div></section>
+
+    <section id="paket" className="border-y border-border bg-secondary py-20 md:py-28"><div className="mx-auto max-w-[1600px] px-5 md:px-10 lg:px-16"><div className="grid gap-8 md:grid-cols-2"><div><Eyebrow>Paket usaha gerobak</Eyebrow><h2 className="mt-8 font-display text-[clamp(2.5rem,4.8vw,5.3rem)] font-medium uppercase leading-[1]">SIAP JUALAN<br /><span className="text-muted-foreground">TANPA RIBET.</span></h2></div><p className="max-w-[430px] self-end text-sm leading-[1.9] text-muted-foreground md:text-base">Untuk Anda yang baru memulai usaha, gerobak bisa datang sudah lengkap dengan kebutuhan dasar. Ukuran tetap menyesuaikan lokasi, dan isi paket bisa diubah sesuai menu.</p></div><div className="mt-12 grid gap-3 md:grid-cols-3">{["Gerobak Kopi Susu", "Gerobak Makanan", "Booth Usaha"].map((nama, i) => <Link key={nama} to="/pabrik-gerobak" className="group flex flex-col justify-between rounded-2xl bg-card p-6 transition-colors hover:bg-background md:p-7"><span className="font-display text-xs text-muted-foreground">0{i + 1}</span><span className="mt-14 font-display text-xl font-medium uppercase leading-tight md:text-2xl">{nama}</span><span className="mt-5 inline-flex items-center gap-2 font-display text-[11px] font-bold uppercase tracking-[0.1em]">Lihat paket <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" /></span></Link>)}</div><p className="mt-8 text-sm text-muted-foreground">Melayani pengiriman gerobak ke <span className="text-foreground">Jepara, Kudus, Pati, Demak, Rembang, dan Semarang</span>. <Link to="/pabrik-gerobak" className="underline underline-offset-4 hover:text-foreground">Selengkapnya soal pabrik gerobak</Link>.</p></div></section>
 
     <section id="workshop" className="bg-charcoal py-20 text-overlay-foreground md:py-28"><div className="mx-auto max-w-[1600px] px-5 md:px-10 lg:px-16"><div className="grid gap-8 md:grid-cols-2"><div><Eyebrow>Workshop / Jepara</Eyebrow><h2 className="mt-8 font-display text-[clamp(2.5rem,5vw,5.5rem)] font-medium uppercase leading-[1]">KARYA DIBENTUK<br /><span className="text-lime">DENGAN TANGAN.</span></h2></div><p className="max-w-[410px] self-end text-sm leading-[1.9] text-overlay-foreground/70 md:text-base">Pemotongan, perakitan, pengelasan, dan finishing adalah tahapan yang memberi setiap karya ketahanan sekaligus karakternya.</p></div><div className="mt-12 grid gap-3 md:grid-cols-[1.3fr_.7fr]"><div className="h-[380px] overflow-hidden rounded-2xl md:h-[540px]"><img src={hero} alt="Ilustrasi proses perakitan container di workshop" loading="lazy" width={1920} height={1088} className="h-full w-full object-cover" /></div><div className="h-[380px] overflow-hidden rounded-2xl md:h-[540px]"><img src={steel} alt="Ilustrasi proses pengelasan logam" loading="lazy" width={1200} height={1504} className="h-full w-full object-cover" /></div></div><p className="mt-3 text-[11px] text-overlay-foreground/60">Visual workshop merupakan ilustrasi konsep.</p></div></section>
 

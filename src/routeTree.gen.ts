@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PabrikGerobakRouteImport } from './routes/pabrik-gerobak'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as PortfolioIndexRouteImport } from './routes/portfolio.index'
@@ -18,6 +19,11 @@ import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PabrikGerobakRoute = PabrikGerobakRouteImport.update({
+  id: '/pabrik-gerobak',
+  path: '/pabrik-gerobak',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PortfolioRoute = PortfolioRouteImport.update({
@@ -43,6 +49,7 @@ const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/pabrik-gerobak': typeof PabrikGerobakRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/pabrik-gerobak': typeof PabrikGerobakRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
   '/portfolio': typeof PortfolioIndexRoute
@@ -57,6 +65,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/pabrik-gerobak': typeof PabrikGerobakRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
@@ -65,12 +74,19 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/portfolio' | '/sitemap.xml' | '/portfolio/$slug' | '/portfolio/'
+    | '/'
+    | '/pabrik-gerobak'
+    | '/portfolio'
+    | '/sitemap.xml'
+    | '/portfolio/$slug'
+    | '/portfolio/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sitemap.xml' | '/portfolio/$slug' | '/portfolio'
+  to:
+    '/' | '/pabrik-gerobak' | '/sitemap.xml' | '/portfolio/$slug' | '/portfolio'
   id:
     | '__root__'
     | '/'
+    | '/pabrik-gerobak'
     | '/portfolio'
     | '/sitemap.xml'
     | '/portfolio/$slug'
@@ -79,6 +95,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PabrikGerobakRoute: typeof PabrikGerobakRoute
   PortfolioRoute: typeof PortfolioRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
@@ -90,6 +107,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pabrik-gerobak': {
+      id: '/pabrik-gerobak'
+      path: '/pabrik-gerobak'
+      fullPath: '/pabrik-gerobak'
+      preLoaderRoute: typeof PabrikGerobakRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/portfolio': {
@@ -139,6 +163,7 @@ const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PabrikGerobakRoute: PabrikGerobakRoute,
   PortfolioRoute: PortfolioRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }

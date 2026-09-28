@@ -9,6 +9,7 @@ export const nav: [string, string][] = [
   ["Workshop", "/#workshop"],
   ["Proses", "/#proses"],
   ["Proyek", "/#proyek"],
+  ["Paket Usaha", "/pabrik-gerobak"],
   ["Kontak", "/#kontak"],
 ];
 
@@ -76,6 +77,13 @@ export function SiteHeader({ tone = "overlay" }: { tone?: "overlay" | "solid" })
           >
             Portofolio
           </Link>
+          <Link
+            to="/pabrik-gerobak"
+            activeProps={{ className: "bg-accent text-accent-foreground" }}
+            className="rounded-full px-4 py-2 font-semibold tracking-[0.01em] text-lime transition-colors hover:bg-overlay-foreground/15 hover:text-overlay-foreground"
+          >
+            Pabrik Gerobak
+          </Link>
         </nav>
         <div className="flex items-center justify-end gap-4">
           <Button
@@ -120,6 +128,14 @@ export function SiteHeader({ tone = "overlay" }: { tone?: "overlay" | "solid" })
             className="block py-3 font-display text-xl text-lime"
           >
             Portofolio
+          </Link>
+          <Link
+            to="/pabrik-gerobak"
+            activeProps={{ className: "bg-accent text-accent-foreground" }}
+            onClick={() => setMenuOpen(false)}
+            className="rounded-full px-4 py-3 font-semibold tracking-[0.01em] text-lime transition-colors hover:bg-overlay-foreground/15 hover:text-overlay-foreground"
+          >
+            Pabrik Gerobak
           </Link>
         </nav>
       )}
