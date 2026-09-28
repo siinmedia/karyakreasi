@@ -12,7 +12,7 @@ import {
   socialMeta,
 } from "@/lib/seo";
 
-const TITLE = "Pabrik Gerobak Usaha Jepara & Kudus — Paket Usaha Siap Jualan";
+const TITLE = "Pabrik Gerobak Jepara & Kudus — Paket Usaha Siap Jualan";
 const DESCRIPTION =
   "Pabrik gerobak usaha di Jepara melayani Kudus, Pati, Demak, dan Semarang. Gerobak custom, paket usaha siap jualan, booth, dan kanopi. Kirim ukuran, kami kerjakan.";
 
