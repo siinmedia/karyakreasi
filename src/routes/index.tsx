@@ -11,6 +11,7 @@ import {
   socialMeta,
   whatsappUrl,
 } from "@/lib/seo";
+import { SiteHeader } from "@/routes/site-chrome";
 import hero from "@/assets/workshop-hero.jpg";
 import container from "@/assets/container-project.jpg";
 import canopy from "@/assets/canopy-project.jpg";
@@ -67,18 +68,8 @@ function Home() {
     <section id="atas" className="relative min-h-[640px] h-[78svh] md:h-[min(850px,92svh)] text-overlay-foreground md:min-h-[680px]">
       <img src={hero} alt="Ilustrasi suasana pengerjaan struktur container di workshop fabrikasi" width={1920} height={1088} className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
       <div className="hero-shade absolute inset-0" />
-      <header className="relative z-20 mx-auto grid max-w-[1600px] grid-cols-[1fr_auto] items-center gap-x-6 px-5 py-5 md:px-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-x-8 lg:px-16">
-        <div className="flex items-center gap-8 lg:gap-10">
-          <a href="#atas" aria-label="Karya Kreasi Bersama, kembali ke atas" className="flex shrink-0 items-center gap-2.5 font-display text-xs font-bold leading-[1.03] md:text-sm"><span className="flex size-9 items-center justify-center rounded-lg bg-accent font-display text-lg text-accent-foreground">K<span className="text-[10px]">/</span></span><span className="whitespace-nowrap">KARYA KREASI<br />BERSAMA</span></a>
-        </div>
-        <nav className="hidden items-center gap-1 rounded-full border border-line-light bg-charcoal/70 px-2 py-2 text-xs font-semibold shadow-[0_6px_24px_-12px_rgba(0,0,0,.5)] backdrop-blur-xl lg:flex" aria-label="Navigasi utama">{nav.map(([label, href]) => <a key={href} href={href} className="rounded-full px-4 py-2 tracking-[0.01em] transition-colors hover:bg-overlay-foreground/15">{label}</a>)}<Link to="/portfolio" activeProps={{ className: "bg-accent text-accent-foreground" }} className="rounded-full px-4 py-2 font-semibold tracking-[0.01em] text-lime transition-colors hover:bg-overlay-foreground/15 hover:text-overlay-foreground">Portofolio</Link></nav>
-        <div className="flex items-center justify-end gap-4">
-          <Button asChild variant="industrial" size="sm" className="hidden h-10 px-5 text-xs md:inline-flex"><a href="#kontak">Konsultasi <ArrowUpRight /></a></Button>
-          <Button variant="industrialOutline" size="icon" className="size-10 lg:hidden" aria-label={menuOpen ? "Tutup menu" : "Buka menu"} onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</Button>
-        </div>
-      </header>
-      {menuOpen && <nav className="absolute inset-x-5 top-20 z-30 rounded-2xl border border-line-light bg-charcoal p-5 text-overlay-foreground lg:hidden" aria-label="Navigasi seluler">{nav.map(([label, href]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="block border-b border-line-light py-3 font-display text-xl last:border-b-0">{label}</a>)}<Link to="/portfolio" onClick={() => setMenuOpen(false)} className="block py-3 font-display text-xl text-lime">Portofolio</Link></nav>}
-      <div className="relative z-10 mx-auto flex h-[calc(100%-96px)] max-w-[1600px] flex-col justify-center px-5 pb-24 md:px-10 lg:px-16">
+      <SiteHeader />
+      <div className="relative z-10 mx-auto flex max-w-[1600px] flex-col justify-center px-5 pb-24 pt-6 md:px-10 md:pb-28 lg:px-16">
         <p className="mb-7 font-display text-[11px] font-semibold uppercase tracking-[0.2em] md:text-xs">CUSTOM FABRICATION WORKSHOP · JEPARA, INDONESIA</p>
         <h1 className="max-w-[1100px] font-display text-[clamp(3.8rem,9vw,9.5rem)] font-medium leading-[0.91] uppercase">WE BUILD.<br />YOU <span className="text-accent">IMAGINE.</span></h1>
         <div className="mt-8 flex flex-col items-start gap-7 md:mt-12 md:flex-row md:items-end md:justify-between">
