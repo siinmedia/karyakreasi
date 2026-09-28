@@ -1,7 +1,18 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Check, MapPin, Package, Ruler, ShieldCheck } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  MapPin,
+  Package,
+  Ruler,
+  ShieldCheck,
+  Timer,
+  Wrench,
+} from "lucide-react";
 import { Eyebrow, SiteFooter, SiteHeader } from "@/routes/site-chrome";
 import { getKotaLain, type KotaGerobak } from "@/routes/kota-data";
+import { getProject } from "@/routes/portfolio-data";
 import {
   absoluteUrl,
   canonicalLink,
@@ -120,6 +131,9 @@ export function headKota(kota: KotaGerobak, path: string) {
 
 export function KotaGerobakPage({ kota }: { kota: KotaGerobak }) {
   const kotaLain = getKotaLain(kota.slug);
+  const contoh = kota.contohProyek
+    .map((slug) => getProject(slug))
+    .filter((proyek): proyek is NonNullable<typeof proyek> => Boolean(proyek));
   const wa = whatsappUrl(
     `Halo ${SITE_NAME}, saya ingin konsultasi gerobak usaha untuk jualan di ${kota.nama}.`,
   );
@@ -128,30 +142,42 @@ export function KotaGerobakPage({ kota }: { kota: KotaGerobak }) {
     <>
       <SiteHeader tone="solid" />
       <main className="overflow-x-hidden">
-        <section className="border-b border-border bg-secondary">
-          <div className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24 lg:px-16">
+        <section className="relative isolate overflow-hidden bg-charcoal text-overlay-foreground">
+          {kota.fotoHero && (
+            <img
+              src={kota.fotoHero}
+              alt=""
+              aria-hidden="true"
+              width={1920}
+              height={1088}
+              fetchPriority="high"
+              className="absolute inset-0 -z-10 size-full object-cover opacity-30"
+            />
+          )}
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-charcoal via-charcoal/90 to-charcoal/45" />
+          <div className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-28 lg:px-16">
             <nav
               aria-label="Breadcrumb"
-              className="mb-8 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.1em] text-muted-foreground"
+              className="mb-8 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.1em] text-overlay-foreground/60"
             >
-              <Link to="/" className="hover:text-foreground">
+              <Link to="/" className="hover:text-lime">
                 Beranda
               </Link>
               <span>/</span>
-              <Link to="/pabrik-gerobak" className="hover:text-foreground">
+              <Link to="/pabrik-gerobak" className="hover:text-lime">
                 Pabrik Gerobak
               </Link>
               <span>/</span>
-              <span className="text-foreground">{kota.nama}</span>
+              <span className="text-lime">{kota.nama}</span>
             </nav>
 
             <Eyebrow>Gerobak usaha · {kota.nama}</Eyebrow>
             <h1 className="mt-7 max-w-[24ch] font-display text-[clamp(2.1rem,4.8vw,4.2rem)] font-medium uppercase leading-[1.02]">
               Gerobak Usaha
               <br />
-              <span className="text-muted-foreground">di {kota.nama}.</span>
+              <span className="text-lime">di {kota.nama}.</span>
             </h1>
-            <p className="mt-7 max-w-[660px] text-sm leading-[1.9] text-muted-foreground md:text-base">
+            <p className="mt-7 max-w-[660px] text-sm leading-[1.9] text-overlay-foreground/75 md:text-base">
               {kota.pembuka}
             </p>
 
@@ -167,81 +193,123 @@ export function KotaGerobakPage({ kota }: { kota: KotaGerobak }) {
               </a>
               <Link
                 to="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.1em] transition-colors hover:bg-background"
+                className="inline-flex items-center gap-2 rounded-full border border-overlay-foreground/25 px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.1em] transition-colors hover:bg-overlay-foreground/10"
               >
                 Lihat hasil pengerjaan
                 <ArrowRight size={16} />
               </Link>
             </div>
 
-            <p className="mt-6 text-sm text-muted-foreground">
+            <p className="mt-6 text-sm text-overlay-foreground/70">
               Telepon atau WhatsApp:{" "}
               <a
                 href={`tel:+${PHONE_DISPLAY.replace(/\D/g, "")}`}
-                className="font-semibold text-foreground underline underline-offset-4"
+                className="font-semibold text-lime underline underline-offset-4"
               >
                 {PHONE_DISPLAY}
               </a>
             </p>
 
-            <dl className="mt-14 grid gap-8 border-t border-border pt-10 sm:grid-cols-2 lg:grid-cols-3">
+            <dl className="mt-14 grid gap-8 border-t border-overlay-foreground/20 pt-10 sm:grid-cols-2 lg:grid-cols-3">
               <div>
-                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em]">
+                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-lime">
                   <MapPin size={14} /> Jangkauan
                 </dt>
-                <dd className="mt-3 text-sm leading-[1.8] text-muted-foreground">{kota.jarak}</dd>
-              </div>
-              <div>
-                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em]">
-                  <Ruler size={14} /> Ukuran menyesuaikan
-                </dt>
-                <dd className="mt-3 text-sm leading-[1.8] text-muted-foreground">
-                  Dimensi dibuat mengikuti lebar lokasi usaha Anda di {kota.nama}, bukan ukuran
-                  pabrik yang seragam.
+                <dd className="mt-3 text-sm leading-[1.8] text-overlay-foreground/75">
+                  {kota.jarak}
                 </dd>
               </div>
               <div>
-                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em]">
+                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-lime">
+                  <Ruler size={14} /> Ukuran menyesuaikan
+                </dt>
+                <dd className="mt-3 text-sm leading-[1.8] text-overlay-foreground/75">
+                  Rincian dimensi dan bahan untuk {kota.nama} ada di bagian berikutnya, bukan ukuran
+                  seragam pabrik.
+                </dd>
+              </div>
+              <div>
+                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-lime">
                   <Package size={14} /> Knockdown
                 </dt>
-                <dd className="mt-3 text-sm leading-[1.8] text-muted-foreground">
+                <dd className="mt-3 text-sm leading-[1.8] text-overlay-foreground/75">
                   Bisa dibongkar saat pengiriman, sehingga ongkos kirim ke {kota.nama} jauh lebih
                   hemat.
                 </dd>
               </div>
             </dl>
+            <p className="mt-6 text-[11px] text-overlay-foreground/50">
+              Visual workshop merupakan ilustrasi konsep.
+            </p>
           </div>
         </section>
 
         <section className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24 lg:px-16">
           <div className="grid gap-10 md:grid-cols-[minmax(0,380px)_1fr] md:gap-16">
             <div>
-              <Eyebrow>Kendala di {kota.nama}</Eyebrow>
+              <Eyebrow>Ukuran &amp; spesifikasi</Eyebrow>
               <h2 className="mt-7 font-display text-[clamp(1.9rem,3.6vw,3.2rem)] font-medium uppercase leading-[1.05]">
-                Yang Kami
+                Ukuran untuk
                 <br />
-                <span className="text-muted-foreground">Perhatikan.</span>
+                <span className="text-muted-foreground">{kota.nama}.</span>
               </h2>
+              <p className="mt-6 text-sm leading-[1.9] text-muted-foreground">
+                Angka di bawah ini rentang yang paling sering kami kerjakan, bukan ukuran wajib.
+                Kirim ukuran lokasi Anda, kami sesuaikan.
+              </p>
             </div>
-            <div className="flex flex-col gap-4">
-              {kota.kendala.map((item) => (
-                <article key={item.judul} className="rounded-2xl border border-border p-6 md:p-8">
-                  <h3 className="font-display text-base font-bold uppercase tracking-[0.02em] md:text-lg">
-                    {item.judul}
-                  </h3>
-                  <p className="mt-3 text-sm leading-[1.9] text-muted-foreground">{item.isi}</p>
+            <div className="grid gap-3">
+              {kota.spesifikasi.map((spek) => (
+                <article
+                  key={spek.label}
+                  className="grid gap-3 rounded-2xl border border-border bg-card p-5 sm:grid-cols-[minmax(0,190px)_1fr] sm:gap-6 md:p-6"
+                >
+                  <div>
+                    <h3 className="font-display text-xs font-bold uppercase tracking-[0.1em]">
+                      {spek.label}
+                    </h3>
+                    <p className="mt-2 font-display text-lg font-medium text-accent md:text-xl">
+                      {spek.nilai}
+                    </p>
+                  </div>
+                  <p className="text-sm leading-[1.9] text-muted-foreground">{spek.catatan}</p>
                 </article>
               ))}
             </div>
           </div>
+        </section>
 
-          <div className="mt-10 rounded-2xl bg-secondary p-7 md:p-10">
-            <h3 className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em]">
-              <ShieldCheck size={14} /> Pertimbangan teknis untuk {kota.nama}
-            </h3>
-            <p className="mt-4 max-w-[820px] text-sm leading-[1.9] text-muted-foreground md:text-base">
-              {kota.teknis}
-            </p>
+        <section className="border-y border-border bg-secondary">
+          <div className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24 lg:px-16">
+            <div className="grid gap-10 md:grid-cols-[minmax(0,380px)_1fr] md:gap-16">
+              <div>
+                <Eyebrow>Kendala di {kota.nama}</Eyebrow>
+                <h2 className="mt-7 font-display text-[clamp(1.9rem,3.6vw,3.2rem)] font-medium uppercase leading-[1.05]">
+                  Yang Kami
+                  <br />
+                  <span className="text-muted-foreground">Perhatikan.</span>
+                </h2>
+              </div>
+              <div className="flex flex-col gap-4">
+                {kota.kendala.map((item) => (
+                  <article key={item.judul} className="rounded-2xl border border-border bg-background p-6 md:p-8">
+                    <h3 className="font-display text-base font-bold uppercase tracking-[0.02em] md:text-lg">
+                      {item.judul}
+                    </h3>
+                    <p className="mt-3 text-sm leading-[1.9] text-muted-foreground">{item.isi}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-10 rounded-2xl bg-charcoal p-7 text-overlay-foreground md:p-10">
+              <h3 className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-lime">
+                <ShieldCheck size={14} /> Pertimbangan teknis untuk {kota.nama}
+              </h3>
+              <p className="mt-4 max-w-[820px] text-sm leading-[1.9] text-overlay-foreground/75 md:text-base">
+                {kota.teknis}
+              </p>
+            </div>
           </div>
         </section>
 
@@ -278,16 +346,90 @@ export function KotaGerobakPage({ kota }: { kota: KotaGerobak }) {
           </div>
         </section>
 
-        <section className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24 lg:px-16">
-          <div className="grid gap-10 md:grid-cols-[minmax(0,380px)_1fr] md:gap-16">
-            <div>
-              <Eyebrow>Alur pemesanan</Eyebrow>
-              <h2 className="mt-7 font-display text-[clamp(1.9rem,3.6vw,3.2rem)] font-medium uppercase leading-[1.05]">
-                Dari Ukuran
-                <br />
-                <span className="text-muted-foreground">ke Gerobak.</span>
-              </h2>
+        {contoh.length > 0 && (
+          <section className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24 lg:px-16">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <div>
+                <Eyebrow>Contoh pengerjaan</Eyebrow>
+                <h2 className="mt-7 font-display text-[clamp(1.9rem,3.6vw,3.2rem)] font-medium uppercase leading-[1.05]">
+                  Gerobak yang
+                  <br />
+                  <span className="text-muted-foreground">Sudah Kami Buat.</span>
+                </h2>
+              </div>
+              <Link
+                to="/portfolio"
+                className="inline-flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] underline underline-offset-4 decoration-border hover:decoration-foreground"
+              >
+                Semua portofolio
+                <ArrowRight size={14} />
+              </Link>
             </div>
+
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {contoh.map((proyek) => (
+                <article key={proyek.slug} className="group overflow-hidden rounded-2xl border border-border">
+                  <div className="aspect-4/3 overflow-hidden bg-secondary">
+                    <img
+                      src={proyek.image}
+                      alt={proyek.name}
+                      loading="lazy"
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <div className="p-6">
+                    <span className="font-display text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
+                      {proyek.category} · {proyek.year}
+                    </span>
+                    <h3 className="mt-2 font-display text-base font-bold uppercase tracking-[0.02em]">
+                      {proyek.name}
+                    </h3>
+                    <dl className="mt-5 flex flex-col gap-2 border-t border-border pt-4 text-sm">
+                      <div className="flex justify-between gap-4">
+                        <dt className="flex items-center gap-2 text-muted-foreground">
+                          <Ruler size={13} /> Ukuran
+                        </dt>
+                        <dd className="text-right font-medium">{proyek.size}</dd>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <dt className="flex items-center gap-2 text-muted-foreground">
+                          <Timer size={13} /> Pengerjaan
+                        </dt>
+                        <dd className="text-right font-medium">{proyek.duration}</dd>
+                      </div>
+                      <div className="flex justify-between gap-4">
+                        <dt className="flex items-center gap-2 text-muted-foreground">
+                          <Wrench size={13} /> Finishing
+                        </dt>
+                        <dd className="text-right font-medium">{proyek.finish}</dd>
+                      </div>
+                    </dl>
+                    <Link
+                      to="/portfolio/$slug"
+                      params={{ slug: proyek.slug }}
+                      className="mt-5 inline-flex items-center gap-2 font-display text-[11px] font-bold uppercase tracking-[0.1em] text-accent"
+                    >
+                      Lihat detail
+                      <ArrowRight size={13} />
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section className="border-y border-border bg-secondary">
+          <div className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24 lg:px-16">
+            <div className="grid gap-10 md:grid-cols-[minmax(0,380px)_1fr] md:gap-16">
+              <div>
+                <Eyebrow>Alur pemesanan</Eyebrow>
+                <h2 className="mt-7 font-display text-[clamp(1.9rem,3.6vw,3.2rem)] font-medium uppercase leading-[1.05]">
+                  Dari Ukuran
+                  <br />
+                  <span className="text-muted-foreground">ke Gerobak.</span>
+                </h2>
+              </div>
             <ol className="flex flex-col">
               {(
                 [
@@ -320,27 +462,33 @@ export function KotaGerobakPage({ kota }: { kota: KotaGerobak }) {
                 </li>
               ))}
             </ol>
+            </div>
           </div>
         </section>
 
-        <section className="bg-accent py-16 text-accent-foreground md:py-20">
+        <section className="bg-charcoal py-16 text-overlay-foreground md:py-24">
           <div className="mx-auto max-w-[1600px] px-5 md:px-10 lg:px-16">
-            <h2 className="max-w-[20ch] font-display text-[clamp(2rem,5vw,4rem)] font-medium uppercase leading-[1]">
-              Mulai dari ukuran lokasi Anda di {kota.nama}.
+            <Eyebrow>Mulai dari ukuran</Eyebrow>
+            <h2 className="mt-7 max-w-[20ch] font-display text-[clamp(2rem,5vw,4rem)] font-medium uppercase leading-[1] text-lime">
+              Ukur lokasi Anda di {kota.nama}, lalu kirim angkanya.
             </h2>
-            <div className="mt-8 flex flex-wrap items-center gap-5">
+            <p className="mt-6 max-w-[620px] text-sm leading-[1.9] text-overlay-foreground/75 md:text-base">
+              Tanpa perlu gambar. Sebutkan lebar dan panjang area yang tersedia, jenis menu, dan
+              kami susun penawaran beserta ukuran gerobak yang pas.
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-5">
               <a
                 href={wa}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-charcoal px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.1em] text-overlay-foreground transition-opacity hover:opacity-90"
+                className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground transition-opacity hover:opacity-90"
               >
                 Tanya lewat WhatsApp
                 <ArrowUpRight size={16} />
               </a>
               <a
                 href={`tel:+${PHONE_DISPLAY.replace(/\D/g, "")}`}
-                className="font-display text-sm font-bold uppercase tracking-[0.06em] underline underline-offset-4"
+                className="font-display text-sm font-bold uppercase tracking-[0.06em] text-lime underline underline-offset-4"
               >
                 {PHONE_DISPLAY}
               </a>

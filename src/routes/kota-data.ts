@@ -7,6 +7,11 @@
  * berbeda, isinya harus benar-benar lain.
  */
 
+import container from "@/assets/container-project.jpg";
+import canopy from "@/assets/canopy-project.jpg";
+import steel from "@/assets/steel-workshop.jpg";
+import hero from "@/assets/workshop-hero.jpg";
+
 export type KotaGerobak = {
   /** Slug kota untuk URL, mis. "jepara" pada /gerobak-usaha-di-jepara. */
   slug: string;
@@ -30,6 +35,12 @@ export type KotaGerobak = {
   jenisUsaha: string[];
   /** Konteks pasar kuliner setempat. */
   pasar: string;
+  /** Rincian ukuran dan spesifikasi teknis yang ditampilkan per kota. */
+  spesifikasi: { label: string; nilai: string; catatan: string }[];
+  /** Slug proyek portofolio yang relevan untuk kota ini. */
+  contohProyek: string[];
+  /** Foto latar hero, diimpor dari src/assets agar resolusinya cukup. */
+  fotoHero: string;
   /** Gambar og:image, diambil dari /public. */
   ogImage: string;
 };
@@ -71,6 +82,40 @@ export const kotaGerobak: KotaGerobak[] = [
     pasar:
       "Jepara punya dua kantong pembeli yang berbeda: area kota yang ramai pada pagi dan sore, serta kawasan wisata yang padat saat akhir pekan dan musim libur. Gerobak yang bisa berpindah memungkinkan Anda mengikuti kedua kantong itu tanpa membuka cabang kedua.",
     ogImage: "/og/gerobak.jpg",
+    fotoHero: hero,
+    spesifikasi: [
+      {
+        label: "Panjang gerobak",
+        nilai: "140 – 200 cm",
+        catatan:
+          "Ukuran terbanyak untuk Jepara. Pilih 140–160 cm bila sering berpindah lokasi bazar, atau 180–200 cm bila lokasi tetap dan butuh meja kerja luas.",
+      },
+      {
+        label: "Lebar & tinggi",
+        nilai: "70 – 95 cm · 180 – 215 cm",
+        catatan:
+          "Lebar dijaga di bawah 95 cm agar tetap bisa lewat teras ruko sempit. Tinggi 200–215 cm memberi ruang berdiri nyaman bagi penjual.",
+      },
+      {
+        label: "Rangka",
+        nilai: "Hollow galvanis 4 × 4 cm",
+        catatan:
+          "Dipilih karena udara pesisir Jepara cepat mengaratkan besi polos. Ketebalan 1,2–1,6 mm, seluruh sambungan las penuh.",
+      },
+      {
+        label: "Roda",
+        nilai: '6 inci heavy duty / 8 inci',
+        catatan:
+          "Roda 6 inci untuk jalanan kampung, 8 inci bila sering melewati jalan berbatu atau menanjak.",
+      },
+      {
+        label: "Waktu pengerjaan",
+        nilai: "2 – 4 minggu",
+        catatan:
+          "Dihitung sejak desain dan ukuran disetujui. Pesanan menjelang musim libur bisa lebih lama.",
+      },
+    ],
+    contohProyek: ["gerobak-kopi-kayu", "gerobak-es-teh", "gerobak-dimsum"],
   },
   {
     slug: "kudus",
@@ -108,6 +153,40 @@ export const kotaGerobak: KotaGerobak[] = [
     pasar:
       "Kudus punya perputaran pembeli yang tinggi pada pagi — untuk sarapan — dan malam. Gerobak yang punya penerangan memadai dan area kerja efisien memungkinkan Anda melayani dua jam sibuk itu tanpa mengubah tata letak.",
     ogImage: "/og/besi.jpg",
+    fotoHero: steel,
+    spesifikasi: [
+      {
+        label: "Panjang gerobak",
+        nilai: "160 – 220 cm",
+        catatan:
+          "Lokasi usaha di Kudus umumnya menghadap jalan ramai, jadi meja servis dibuat lebih panjang agar bisa melayani beberapa pembeli sekaligus.",
+      },
+      {
+        label: "Lebar & tinggi",
+        nilai: "80 – 100 cm · 195 – 220 cm",
+        catatan:
+          "Bidang branding depan diperbesar mengikuti tinggi pandang pengendara yang melintas pelan.",
+      },
+      {
+        label: "Permukaan kerja",
+        nilai: "Stainless food grade 304",
+        catatan:
+          "Pembeli Kudus peka pada kebersihan. Panel dibuat rata tanpa sambungan terbuka agar mudah dilap dan tidak menahan minyak.",
+      },
+      {
+        label: "Jendela servis",
+        nilai: "Model geser 70 – 90 cm",
+        catatan:
+          "Geser, bukan buka-tutup, supaya tidak menghalangi pejalan kaki di trotoar yang sempit.",
+      },
+      {
+        label: "Waktu pengerjaan",
+        nilai: "2 – 4 minggu",
+        catatan:
+          "Gerobak knockdown dikirim utuh dalam satu pikap, lalu dirakit kembali di lokasi Anda.",
+      },
+    ],
+    contohProyek: ["gerobak-sate", "gerobak-nasi-goreng", "gerobak-bakso"],
   },
   {
     slug: "semarang",
@@ -145,6 +224,40 @@ export const kotaGerobak: KotaGerobak[] = [
     pasar:
       "Semarang punya dua pola yang harus diantisipasi: pembeli cepat di sekitar kampus dengan waktu makan terbatas, dan pembeli keluarga yang lebih memilih tampilan bersih. Tata letak gerobak perlu melayani keduanya, dan itu bisa dibahas saat konsultasi.",
     ogImage: "/og/kanopi.jpg",
+    fotoHero: canopy,
+    spesifikasi: [
+      {
+        label: "Panjang gerobak",
+        nilai: "180 – 240 cm",
+        catatan:
+          "Volume antrean di area kampus Tembalang menuntut meja servis lebar. Ukuran 180 cm ke atas memberi ruang rak bumbu bertingkat.",
+      },
+      {
+        label: "Lebar & tinggi",
+        nilai: "90 – 110 cm · 200 – 230 cm",
+        catatan:
+          "Bila lokasi di teras ruko, ukur lebar tersedia lebih dulu. Kami sesuaikan agar tidak menutup akses.",
+      },
+      {
+        label: "Sambungan",
+        nilai: "Las penuh, bukan las titik",
+        catatan:
+          "Pemakaian harian volume tinggi membuat sambungan las titik cepat longgar. Seluruh sambungan dilas penuh lalu dicat termasuk bagian dalam.",
+      },
+      {
+        label: "Kanopi & listrik",
+        nilai: "Kanopi + talang · instalasi 220 V",
+        catatan:
+          "Banyak titik usaha di Semarang terbuka terhadap hujan. Instalasi listrik disiapkan untuk lampu, mesin kasir, dan alat minuman.",
+      },
+      {
+        label: "Waktu pengerjaan",
+        nilai: "3 – 5 minggu",
+        catatan:
+          "Lebih panjang dari kota lain karena ukuran besar dan instalasi listrik. Pengiriman via Pantura sekitar 2 jam.",
+      },
+    ],
+    contohProyek: ["booth-kopi-susu", "kanopi-gerobak-teras", "gerobak-nasi-goreng"],
   },
 ];
 
