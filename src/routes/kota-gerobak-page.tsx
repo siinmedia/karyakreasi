@@ -140,7 +140,6 @@ export function KotaGerobakPage({ kota }: { kota: KotaGerobak }) {
 
   return (
     <>
-      <SiteHeader tone="solid" />
       <main className="overflow-x-hidden">
         <section className="relative isolate overflow-hidden bg-charcoal text-overlay-foreground">
           {kota.fotoHero && (
@@ -155,7 +154,8 @@ export function KotaGerobakPage({ kota }: { kota: KotaGerobak }) {
             />
           )}
           <div className="absolute inset-0 -z-10 bg-gradient-to-r from-charcoal via-charcoal/90 to-charcoal/45" />
-          <div className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-28 lg:px-16">
+          <SiteHeader />
+          <div className="mx-auto max-w-[1600px] px-5 pb-16 pt-8 md:px-10 md:pb-28 md:pt-12 lg:px-16">
             <nav
               aria-label="Breadcrumb"
               className="mb-8 flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.1em] text-overlay-foreground/60"

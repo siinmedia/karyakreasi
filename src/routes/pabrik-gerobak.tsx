@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Check, MapPin, Truck, Wrench } from "lucide-react";
+import hero from "@/assets/workshop-hero.jpg";
 import { Eyebrow, SiteFooter, SiteHeader } from "@/routes/site-chrome";
 import { kotaGerobak } from "@/routes/kota-data";
 import {
@@ -81,17 +82,27 @@ export const Route = createFileRoute("/pabrik-gerobak")({
 function PabrikGerobak() {
   return (
     <>
-      <SiteHeader tone="solid" />
       <main className="overflow-x-hidden">
-        <section className="border-b border-border bg-secondary">
-          <div className="mx-auto max-w-[1600px] px-5 py-16 md:px-10 md:py-24 lg:px-16">
+        <section className="relative isolate overflow-hidden bg-charcoal text-overlay-foreground">
+          <img
+            src={hero}
+            alt=""
+            aria-hidden="true"
+            width={1920}
+            height={1088}
+            fetchPriority="high"
+            className="absolute inset-0 -z-10 size-full object-cover opacity-30"
+          />
+          <div className="absolute inset-0 -z-10 bg-gradient-to-r from-charcoal via-charcoal/90 to-charcoal/45" />
+          <SiteHeader />
+          <div className="mx-auto max-w-[1600px] px-5 pb-16 pt-8 md:px-10 md:pb-28 md:pt-12 lg:px-16">
             <Eyebrow>Pabrik gerobak usaha</Eyebrow>
             <h1 className="mt-7 max-w-[22ch] font-display text-[clamp(2.2rem,5vw,4.4rem)] font-medium uppercase leading-[1.02]">
               Pabrik Gerobak
               <br />
-              <span className="text-muted-foreground">Jepara &amp; Kudus.</span>
+              <span className="text-lime">Jepara &amp; Kudus.</span>
             </h1>
-            <p className="mt-7 max-w-[620px] text-sm leading-[1.9] text-muted-foreground md:text-base">
+            <p className="mt-7 max-w-[620px] text-sm leading-[1.9] text-overlay-foreground/75 md:text-base">
               Kami membuat gerobak usaha custom langsung di workshop Jepara, lalu mengirimnya ke
               Kudus, Pati, Demak, Rembang, Semarang, dan sekitarnya. Semua dikerjakan sesuai ukuran
               lokasi Anda, bukan sekadar ukuran standar pabrik.
@@ -110,48 +121,51 @@ function PabrikGerobak() {
               </a>
               <Link
                 to="/portfolio"
-                className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.1em] transition-colors hover:bg-background"
+                className="inline-flex items-center gap-2 rounded-full border border-overlay-foreground/25 px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.1em] transition-colors hover:bg-overlay-foreground/10"
               >
                 Lihat hasil pengerjaan
                 <ArrowRight size={16} />
               </Link>
             </div>
-            <p className="mt-6 text-sm text-muted-foreground">
+            <p className="mt-6 text-sm text-overlay-foreground/70">
               Telepon atau WhatsApp:{" "}
               <a
                 href={`tel:+${PHONE_DISPLAY.replace(/\D/g, "")}`}
-                className="font-semibold text-foreground underline underline-offset-4"
+                className="font-semibold text-lime underline underline-offset-4"
               >
                 {PHONE_DISPLAY}
               </a>
             </p>
 
-            <dl className="mt-14 grid gap-8 border-t border-border pt-10 sm:grid-cols-3">
+            <dl className="mt-14 grid gap-8 border-t border-overlay-foreground/20 pt-10 sm:grid-cols-3">
               <div>
-                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em]">
+                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-lime">
                   <Wrench size={14} /> Dikerjakan sendiri
                 </dt>
-                <dd className="mt-3 text-sm leading-[1.8] text-muted-foreground">
+                <dd className="mt-3 text-sm leading-[1.8] text-overlay-foreground/75">
                   Diproduksi di workshop Jepara, bukan dipesan ulang dari pihak ketiga.
                 </dd>
               </div>
               <div>
-                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em]">
+                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-lime">
                   <MapPin size={14} /> Ukuran menyesuaikan
                 </dt>
-                <dd className="mt-3 text-sm leading-[1.8] text-muted-foreground">
+                <dd className="mt-3 text-sm leading-[1.8] text-overlay-foreground/75">
                   Dimensi disesuaikan lokasi usaha Anda, termasuk area parkir yang sempit.
                 </dd>
               </div>
               <div>
-                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em]">
+                <dt className="flex items-center gap-2 font-display text-xs font-bold uppercase tracking-[0.1em] text-lime">
                   <Truck size={14} /> Kirim ke luar kota
                 </dt>
-                <dd className="mt-3 text-sm leading-[1.8] text-muted-foreground">
+                <dd className="mt-3 text-sm leading-[1.8] text-overlay-foreground/75">
                   Melayani pengiriman ke Kudus, Pati, Demak, Rembang, dan Semarang.
                 </dd>
               </div>
             </dl>
+            <p className="mt-6 text-[11px] text-overlay-foreground/50">
+              Visual workshop merupakan ilustrasi konsep.
+            </p>
           </div>
         </section>
 
