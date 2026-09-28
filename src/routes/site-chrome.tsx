@@ -3,6 +3,7 @@ import { ArrowDown, ArrowUpRight, Menu, MessageCircle, Phone, X } from "lucide-r
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PHONE_DISPLAY, whatsappUrl } from "@/lib/seo";
+import { kotaGerobak } from "@/routes/kota-data";
 
 export const nav: [string, string][] = [
   ["Tentang", "/#tentang"],
@@ -179,6 +180,15 @@ export function SiteFooter() {
             <Link to="/portfolio" className="mb-3 block text-sm text-lime">
               Portofolio
             </Link>
+            {kotaGerobak.map((kota) => (
+              <a
+                key={kota.slug}
+                href={kota.route}
+                className="mb-3 block text-sm hover:text-lime"
+              >
+                Gerobak Usaha {kota.nama}
+              </a>
+            ))}
           </div>
           <div>
             <p className="mb-5 text-xs uppercase text-overlay-foreground/55">Temukan kami</p>

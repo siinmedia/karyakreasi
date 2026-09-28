@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SITE_URL } from "@/lib/seo";
 import { projects } from "@/routes/portfolio-data";
+import { kotaGerobak } from "@/routes/kota-data";
 
 /**
  * Sitemap XML dinamis.
@@ -17,6 +18,11 @@ export const Route = createFileRoute("/sitemap.xml")({
           { loc: `${SITE_URL}/`, priority: "1.0", changefreq: "weekly" },
           { loc: `${SITE_URL}/portfolio`, priority: "0.9", changefreq: "weekly" },
           { loc: `${SITE_URL}/pabrik-gerobak`, priority: "0.9", changefreq: "monthly" },
+          ...kotaGerobak.map((k) => ({
+            loc: `${SITE_URL}${k.route}`,
+            priority: "0.8",
+            changefreq: "monthly",
+          })),
           ...projects.map((p) => ({
             loc: `${SITE_URL}/portfolio/${p.slug}`,
             priority: "0.7",

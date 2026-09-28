@@ -10,6 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GerobakUsahaDiJeparaRouteImport } from './routes/gerobak-usaha-di-jepara'
+import { Route as GerobakUsahaDiKudusRouteImport } from './routes/gerobak-usaha-di-kudus'
+import { Route as GerobakUsahaDiSemarangRouteImport } from './routes/gerobak-usaha-di-semarang'
 import { Route as PabrikGerobakRouteImport } from './routes/pabrik-gerobak'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -19,6 +22,21 @@ import { Route as PortfolioSlugRouteImport } from './routes/portfolio.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerobakUsahaDiJeparaRoute = GerobakUsahaDiJeparaRouteImport.update({
+  id: '/gerobak-usaha-di-jepara',
+  path: '/gerobak-usaha-di-jepara',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerobakUsahaDiKudusRoute = GerobakUsahaDiKudusRouteImport.update({
+  id: '/gerobak-usaha-di-kudus',
+  path: '/gerobak-usaha-di-kudus',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GerobakUsahaDiSemarangRoute = GerobakUsahaDiSemarangRouteImport.update({
+  id: '/gerobak-usaha-di-semarang',
+  path: '/gerobak-usaha-di-semarang',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PabrikGerobakRoute = PabrikGerobakRouteImport.update({
@@ -49,6 +67,9 @@ const PortfolioSlugRoute = PortfolioSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/gerobak-usaha-di-jepara': typeof GerobakUsahaDiJeparaRoute
+  '/gerobak-usaha-di-kudus': typeof GerobakUsahaDiKudusRoute
+  '/gerobak-usaha-di-semarang': typeof GerobakUsahaDiSemarangRoute
   '/pabrik-gerobak': typeof PabrikGerobakRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -57,6 +78,9 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/gerobak-usaha-di-jepara': typeof GerobakUsahaDiJeparaRoute
+  '/gerobak-usaha-di-kudus': typeof GerobakUsahaDiKudusRoute
+  '/gerobak-usaha-di-semarang': typeof GerobakUsahaDiSemarangRoute
   '/pabrik-gerobak': typeof PabrikGerobakRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/portfolio/$slug': typeof PortfolioSlugRoute
@@ -65,6 +89,9 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/gerobak-usaha-di-jepara': typeof GerobakUsahaDiJeparaRoute
+  '/gerobak-usaha-di-kudus': typeof GerobakUsahaDiKudusRoute
+  '/gerobak-usaha-di-semarang': typeof GerobakUsahaDiSemarangRoute
   '/pabrik-gerobak': typeof PabrikGerobakRoute
   '/portfolio': typeof PortfolioRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -75,6 +102,9 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/gerobak-usaha-di-jepara'
+    | '/gerobak-usaha-di-kudus'
+    | '/gerobak-usaha-di-semarang'
     | '/pabrik-gerobak'
     | '/portfolio'
     | '/sitemap.xml'
@@ -82,10 +112,20 @@ export interface FileRouteTypes {
     | '/portfolio/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/pabrik-gerobak' | '/sitemap.xml' | '/portfolio/$slug' | '/portfolio'
+    | '/'
+    | '/gerobak-usaha-di-jepara'
+    | '/gerobak-usaha-di-kudus'
+    | '/gerobak-usaha-di-semarang'
+    | '/pabrik-gerobak'
+    | '/sitemap.xml'
+    | '/portfolio/$slug'
+    | '/portfolio'
   id:
     | '__root__'
     | '/'
+    | '/gerobak-usaha-di-jepara'
+    | '/gerobak-usaha-di-kudus'
+    | '/gerobak-usaha-di-semarang'
     | '/pabrik-gerobak'
     | '/portfolio'
     | '/sitemap.xml'
@@ -95,6 +135,9 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GerobakUsahaDiJeparaRoute: typeof GerobakUsahaDiJeparaRoute
+  GerobakUsahaDiKudusRoute: typeof GerobakUsahaDiKudusRoute
+  GerobakUsahaDiSemarangRoute: typeof GerobakUsahaDiSemarangRoute
   PabrikGerobakRoute: typeof PabrikGerobakRoute
   PortfolioRoute: typeof PortfolioRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -107,6 +150,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerobak-usaha-di-jepara': {
+      id: '/gerobak-usaha-di-jepara'
+      path: '/gerobak-usaha-di-jepara'
+      fullPath: '/gerobak-usaha-di-jepara'
+      preLoaderRoute: typeof GerobakUsahaDiJeparaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerobak-usaha-di-kudus': {
+      id: '/gerobak-usaha-di-kudus'
+      path: '/gerobak-usaha-di-kudus'
+      fullPath: '/gerobak-usaha-di-kudus'
+      preLoaderRoute: typeof GerobakUsahaDiKudusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gerobak-usaha-di-semarang': {
+      id: '/gerobak-usaha-di-semarang'
+      path: '/gerobak-usaha-di-semarang'
+      fullPath: '/gerobak-usaha-di-semarang'
+      preLoaderRoute: typeof GerobakUsahaDiSemarangRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pabrik-gerobak': {
@@ -163,6 +227,9 @@ const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GerobakUsahaDiJeparaRoute: GerobakUsahaDiJeparaRoute,
+  GerobakUsahaDiKudusRoute: GerobakUsahaDiKudusRoute,
+  GerobakUsahaDiSemarangRoute: GerobakUsahaDiSemarangRoute,
   PabrikGerobakRoute: PabrikGerobakRoute,
   PortfolioRoute: PortfolioRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Check, MapPin, Truck, Wrench } from "lucide-react";
 import { Eyebrow, SiteFooter, SiteHeader } from "@/routes/site-chrome";
+import { kotaGerobak } from "@/routes/kota-data";
 import {
   canonicalLink,
   faqSchema,
@@ -198,14 +199,26 @@ function PabrikGerobak() {
               <span className="text-muted-foreground">Sekitar Jepara.</span>
             </h2>
             <div className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
-              {SERVICE_AREAS.map((area) => (
-                <div key={area} className="border-t border-border pt-5">
-                  <h3 className="font-display text-sm font-bold uppercase tracking-[0.08em]">
-                    Gerobak &amp; Booth {area}
-                  </h3>
-                  <p className="mt-3 text-sm leading-[1.8] text-muted-foreground">{AREAS[area]}</p>
-                </div>
-              ))}
+              {SERVICE_AREAS.map((area) => {
+                const halaman = kotaGerobak.find((k) => k.nama === area);
+                return (
+                  <div key={area} className="border-t border-border pt-5">
+                    {halaman ? (
+                      <a
+                        href={halaman.route}
+                        className="font-display text-sm font-bold uppercase tracking-[0.08em] underline underline-offset-4 decoration-border hover:decoration-foreground"
+                      >
+                        Gerobak Usaha di {area}
+                      </a>
+                    ) : (
+                      <h3 className="font-display text-sm font-bold uppercase tracking-[0.08em]">
+                        Gerobak &amp; Booth {area}
+                      </h3>
+                    )}
+                    <p className="mt-3 text-sm leading-[1.8] text-muted-foreground">{AREAS[area]}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
