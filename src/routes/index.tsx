@@ -2,20 +2,26 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, Menu, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { canonicalLink, jsonLdScript, localBusinessSchema, socialMeta } from "@/lib/seo";
 import hero from "@/assets/workshop-hero.jpg";
 import container from "@/assets/container-project.jpg";
 import canopy from "@/assets/canopy-project.jpg";
 import steel from "@/assets/steel-workshop.jpg";
 
+const TITLE = "Karya Kreasi Bersama — Workshop Fabrikasi Custom Jepara";
+const DESCRIPTION =
+  "Workshop fabrikasi custom di Jepara untuk gerobak usaha, container, booth, kanopi, pagar, gerbang, dan struktur besi. Kirim ukuran atau referensi, kami kerjakan dari sketsa hingga berdiri.";
+
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: [
-    { title: "Karya Kreasi Bersama — Custom Fabrication Workshop Jepara" },
-    { name: "description", content: "Workshop fabrikasi custom di Jepara untuk container, booth, kanopi, pagar, gerbang, struktur besi, dan proyek khusus." },
-    { property: "og:title", content: "Karya Kreasi Bersama — Custom Fabrication Workshop Jepara" },
-    { property: "og:description", content: "Dari ide menjadi struktur nyata. Workshop fabrikasi custom di Jepara, Jawa Tengah." },
-    { property: "og:type", content: "website" },
-    { name: "twitter:card", content: "summary_large_image" },
-  ] }),
+  head: () => ({
+    meta: [
+      { title: TITLE },
+      { name: "description", content: DESCRIPTION },
+      ...socialMeta({ title: TITLE, description: DESCRIPTION, url: "/" }),
+    ],
+    links: [canonicalLink("/")],
+    scripts: [jsonLdScript(localBusinessSchema())],
+  }),
   component: Home,
 });
 

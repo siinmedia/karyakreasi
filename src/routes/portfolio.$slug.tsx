@@ -3,6 +3,14 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getNeighbors, getProject } from "./portfolio-data";
 import { Eyebrow, SiteFooter, SiteHeader } from "./site-chrome";
+import {
+  SITE_NAME,
+  canonicalLink,
+  jsonLdScript,
+  localBusinessSchema,
+  projectSchema,
+  socialMeta,
+} from "@/lib/seo";
 
 export const Route = createFileRoute("/portfolio/$slug")({
   loader: ({ params }) => {
@@ -12,18 +20,38 @@ export const Route = createFileRoute("/portfolio/$slug")({
   },
   head: ({ loaderData }) => {
     const project = loaderData?.project;
-    if (!project) return { meta: [{ title: "Proyek tidak ditemukan | Karya Kreasi Bersama" }] };
+    if (!project) {
+      return { meta: [{ title: `Proyek tidak ditemukan — ${SITE_NAME}` }] };
+    }
+    const path = `/portfolio/${project.slug}`;
+    const title = `${project.name} — ${project.category} ${project.year} | ${SITE_NAME}`;
+    const description = `${project.name}: ${project.category} ${project.year} di ${project.location}. ${project.detail}`;
     return {
       meta: [
-        { title: `${project.name} — Portofolio | Karya Kreasi Bersama` },
-        {
-          name: "description",
-          content: `${project.name} — ${project.category} ${project.year} di ${project.location}. ${project.detail}`,
-        },
-        { property: "og:title", content: `${project.name} — Portofolio` },
-        { property: "og:description", content: project.detail },
-        { property: "og:type", content: "article" },
-        { name: "twitter:card", content: "summary_large_image" },
+        { title },
+        { name: "description", content: description },
+        ...socialMeta({
+          title,
+          description,
+          url: path,
+          image: project.ogImage,
+          type: "article",
+        }),
+      ],
+      links: [canonicalLink(path)],
+      scripts: [
+        jsonLdScript(localBusinessSchema()),
+        jsonLdScript(
+          projectSchema({
+            name: project.name,
+            slug: project.slug,
+            category: project.category,
+            year: project.year,
+            detail: project.detail,
+            image: project.ogImage,
+            materials: project.materials,
+          }),
+        ),
       ],
     };
   },
