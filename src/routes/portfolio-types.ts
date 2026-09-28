@@ -6,6 +6,10 @@ export type Project = {
   materials: string[];
   location: string;
   detail: string;
+  /** Paragraf proses pengerjaan, unik per proyek. */
+  process: string;
+  /** Konteks pemakaian proyek, unik per proyek. */
+  usage: string;
   image: string;
   /** URL publik stabil untuk og:image (dari /public, bukan bundler asset). */
   ogImage: string;

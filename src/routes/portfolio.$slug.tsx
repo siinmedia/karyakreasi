@@ -24,7 +24,9 @@ export const Route = createFileRoute("/portfolio/$slug")({
       return { meta: [{ title: `Proyek tidak ditemukan — ${SITE_NAME}` }] };
     }
     const path = `/portfolio/${project.slug}`;
-    const title = `${project.name} — ${project.category} ${project.year} | ${SITE_NAME}`;
+    // Judul dijaga ringkas agar tidak terpotong di hasil pencarian.
+    // Brand tetap muncul lewat og:site_name, jadi tidak diulang di title.
+    const title = `${project.name} — ${project.category} ${project.year}`;
     const description = `${project.name}: ${project.category} ${project.year} di ${project.location}. ${project.detail}`;
     return {
       meta: [
@@ -47,7 +49,7 @@ export const Route = createFileRoute("/portfolio/$slug")({
             slug: project.slug,
             category: project.category,
             year: project.year,
-            detail: project.detail,
+            detail: `${project.detail} ${project.process} ${project.usage}`,
             image: project.ogImage,
             materials: project.materials,
           }),
@@ -159,10 +161,15 @@ function ProjectDetail() {
               <span className="text-muted-foreground">KERJAKAN.</span>
             </h2>
             <p className="mt-6 max-w-[520px] text-sm leading-[1.9] text-muted-foreground md:text-base">
-              Unit ini dirancang mengikuti kebutuhan pemakaian harian, mulai dari rangka, tata letak
-              kerja, hingga finishing agar mudah dibersihkan dan tahan lama.
+              {project.process}
             </p>
-            <ul className="mt-8 flex flex-col gap-3">
+            <p className="mt-5 max-w-[520px] text-sm leading-[1.9] text-muted-foreground md:text-base">
+              {project.usage}
+            </p>
+            <p className="mt-8 font-display text-xs font-bold uppercase tracking-[0.1em]">
+              Poin pengerjaan
+            </p>
+            <ul className="mt-4 flex flex-col gap-3">
               {project.highlights.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm md:text-base">
                   <span className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground">
