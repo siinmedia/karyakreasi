@@ -28,61 +28,76 @@ export function SiteHeader({ tone = "overlay" }: { tone?: "overlay" | "solid" })
     <>
       <header
         className={
-          "relative z-20 mx-auto flex max-w-[1600px] items-center justify-between gap-5 px-5 py-5 md:px-10 lg:px-16 " +
+          "relative z-20 mx-auto grid max-w-[1600px] grid-cols-[1fr_auto] items-center gap-x-6 px-5 py-5 md:px-10 lg:grid-cols-[1fr_auto_1fr] lg:gap-x-8 lg:px-16 " +
           (solid ? "text-foreground" : "text-overlay-foreground")
         }
       >
-        <Link
-          to="/"
-          aria-label="Karya Kreasi Bersama, kembali ke beranda"
-          className="flex shrink-0 items-center gap-2.5 font-display text-xs font-bold leading-[1.03] md:text-sm"
-        >
-          <span className="flex size-9 items-center justify-center rounded-lg bg-accent font-display text-lg text-accent-foreground">
-            K<span className="text-[10px]">/</span>
-          </span>
-          <span>
-            KARYA KREASI
-            <br />
-            BERSAMA
-          </span>
-        </Link>
+        <div className="flex items-center gap-8 lg:gap-10">
+          <Link
+            to="/"
+            aria-label="Karya Kreasi Bersama, kembali ke beranda"
+            className="flex shrink-0 items-center gap-2.5 font-display text-xs font-bold leading-[1.03] md:text-sm"
+          >
+            <span className="flex size-9 items-center justify-center rounded-lg bg-accent font-display text-lg text-accent-foreground">
+              K<span className="text-[10px]">/</span>
+            </span>
+            <span className="whitespace-nowrap">
+              KARYA KREASI
+              <br />
+              BERSAMA
+            </span>
+          </Link>
+        </div>
         <nav
           className={
-            "hidden items-center gap-7 rounded-full border px-7 py-3 text-[11px] font-semibold backdrop-blur-md lg:flex " +
+            "hidden items-center gap-1 rounded-full border px-2 py-2 text-xs font-semibold shadow-[0_6px_24px_-12px_rgba(0,0,0,.5)] backdrop-blur-xl lg:flex " +
             (solid
-              ? "border-border bg-secondary/60"
-              : "border-line-light bg-charcoal/35 text-overlay-foreground")
+              ? "border-border bg-card/95 text-foreground"
+              : "border-line-light bg-charcoal/70 text-overlay-foreground")
           }
           aria-label="Navigasi utama"
         >
           {nav.map(([label, href]) => (
-            <a key={href} href={href} className="transition-opacity hover:opacity-60">
+            <a
+              key={href}
+              href={href}
+              className={
+                "rounded-full px-4 py-2 tracking-[0.01em] transition-colors " +
+                (solid ? "hover:bg-secondary" : "hover:bg-overlay-foreground/15")
+              }
+            >
               {label}
             </a>
           ))}
-          <Link to="/portfolio" className="text-lime transition-opacity hover:opacity-60">
+          <Link
+            to="/portfolio"
+            activeProps={{ className: "bg-accent text-accent-foreground" }}
+            className="rounded-full px-4 py-2 font-semibold tracking-[0.01em] text-lime transition-colors hover:bg-overlay-foreground/15 hover:text-overlay-foreground"
+          >
             Portofolio
           </Link>
         </nav>
-        <Button
-          asChild
-          variant="industrial"
-          size="sm"
-          className="hidden h-10 px-5 text-xs md:inline-flex"
-        >
-          <a href="/#kontak">
-            Konsultasi <ArrowUpRight />
-          </a>
-        </Button>
-        <Button
-          variant={solid ? "outline" : "industrialOutline"}
-          size="icon"
-          className="size-10 lg:hidden"
-          aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X /> : <Menu />}
-        </Button>
+        <div className="flex items-center justify-end gap-4">
+          <Button
+            asChild
+            variant="industrial"
+            size="sm"
+            className="hidden h-10 px-5 text-xs md:inline-flex"
+          >
+            <a href="/#kontak">
+              Konsultasi <ArrowUpRight />
+            </a>
+          </Button>
+          <Button
+            variant={solid ? "outline" : "industrialOutline"}
+            size="icon"
+            className="size-10 lg:hidden"
+            aria-label={menuOpen ? "Tutup menu" : "Buka menu"}
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X /> : <Menu />}
+          </Button>
+        </div>
       </header>
       {menuOpen && (
         <nav
