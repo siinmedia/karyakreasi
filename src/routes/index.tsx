@@ -2,7 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ArrowDown, ArrowRight, ArrowUpRight, Menu, Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { canonicalLink, faqSchema, jsonLdScript, localBusinessSchema, socialMeta } from "@/lib/seo";
+import {
+  canonicalLink,
+  faqSchema,
+  jsonLdScript,
+  localBusinessSchema,
+  PHONE_DISPLAY,
+  socialMeta,
+  whatsappUrl,
+} from "@/lib/seo";
 import hero from "@/assets/workshop-hero.jpg";
 import container from "@/assets/container-project.jpg";
 import canopy from "@/assets/canopy-project.jpg";
@@ -45,7 +53,7 @@ const faqs = [
   ["Bagaimana sistem pembayaran?", "Detail pembayaran disepakati bersama setelah lingkup pekerjaan dan penawaran proyek ditentukan."],
   ["Apa yang perlu disiapkan untuk konsultasi?", "Cukup siapkan gambaran kebutuhan, perkiraan ukuran, lokasi, dan referensi visual jika ada."],
 ];
-const whatsappShare = "https://api.whatsapp.com/send?text=" + encodeURIComponent("Halo Karya Kreasi Bersama, saya ingin konsultasi mengenai proyek fabrikasi custom.");
+const whatsappShare = whatsappUrl();
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return <p className="font-display text-[11px] font-bold uppercase tracking-[0.12em] md:text-xs"><span className="mr-2 inline-block size-1.5 rounded-full bg-accent align-middle" />{children}</p>;
@@ -105,7 +113,7 @@ function Home() {
 
     <section className="bg-secondary py-20 md:py-28"><div className="mx-auto grid max-w-[1600px] gap-10 px-5 md:grid-cols-[.9fr_1.1fr] md:gap-20 md:px-10 lg:px-16"><div><Eyebrow>Material & kualitas</Eyebrow><h2 className="mt-8 font-display text-[clamp(2.5rem,4.8vw,5.3rem)] font-medium uppercase leading-[1]">DIBANGUN UNTUK<br /><span className="text-muted-foreground">BERTAHAN.</span></h2></div><div className="self-end"><p className="mb-8 max-w-[460px] text-sm leading-[1.8] text-muted-foreground">Material dipilih sesuai fungsi, lingkungan penggunaan, dan kebutuhan akhir proyek.</p><div className="flex flex-col gap-2">{["Hollow Galvanis", "Galvalum", "ACP Waterproof", "Steel", "Electrical Components"].map((material, i) => <div key={material} className="flex items-center justify-between rounded-xl bg-card px-5 py-3.5 font-display text-lg uppercase md:text-xl"><span>{material}</span><span className="text-xs text-muted-foreground">0{i + 1}</span></div>)}</div></div></div></section>
 
-    <section id="kontak" className="bg-accent py-20 text-accent-foreground md:py-28"><div className="mx-auto max-w-[1600px] px-5 md:px-10 lg:px-16"><Eyebrow>Mulai dari sebuah ide</Eyebrow><h2 className="mt-9 max-w-[1300px] font-display text-[clamp(3.3rem,9vw,10rem)] font-medium uppercase leading-[.9]">GOT SOMETHING<br />IN MIND?</h2><div className="mt-11 flex flex-col items-start justify-between gap-7 border-t border-accent-foreground/30 pt-8 md:flex-row md:items-end"><p className="max-w-[550px] text-sm leading-[1.8] md:text-base">Kirim ukuran, gambar referensi, drawing, atau cukup ceritakan idenya. Mari ubah menjadi sesuatu yang bisa berdiri, digunakan, dan bertahan.</p><Button asChild variant="industrialDark" size="lg" className="h-13 px-7"><a href={whatsappShare} target="_blank" rel="noreferrer">Siapkan Pesan WhatsApp <ArrowUpRight /></a></Button></div></div></section>
+    <section id="kontak" className="bg-accent py-20 text-accent-foreground md:py-28"><div className="mx-auto max-w-[1600px] px-5 md:px-10 lg:px-16"><Eyebrow>Mulai dari sebuah ide</Eyebrow><h2 className="mt-9 max-w-[1300px] font-display text-[clamp(3.3rem,9vw,10rem)] font-medium uppercase leading-[.9]">GOT SOMETHING<br />IN MIND?</h2><div className="mt-11 flex flex-col items-start justify-between gap-7 border-t border-accent-foreground/30 pt-8 md:flex-row md:items-end"><p className="max-w-[550px] text-sm leading-[1.8] md:text-base">Kirim ukuran, gambar referensi, drawing, atau cukup ceritakan idenya. Mari ubah menjadi sesuatu yang bisa berdiri, digunakan, dan bertahan.</p><div className="flex flex-col gap-4 sm:flex-row sm:items-center"><Button asChild variant="industrialDark" size="lg" className="h-13 px-7"><a href={whatsappShare} target="_blank" rel="noreferrer">Siapkan Pesan WhatsApp <ArrowUpRight /></a></Button><a href={`tel:+${PHONE_DISPLAY.replace(/\D/g, "")}`} className="font-display text-sm font-bold uppercase tracking-[0.06em] underline underline-offset-4 hover:no-underline">Telepon {PHONE_DISPLAY}</a></div></div></div></section>
 
     <section className="mx-auto max-w-[1600px] px-5 py-20 md:px-10 md:py-28 lg:px-16"><div className="grid gap-10 md:grid-cols-[.8fr_1.2fr] md:gap-20"><div><Eyebrow>FAQ</Eyebrow><h2 className="mt-8 font-display text-[clamp(2.5rem,5vw,5rem)] font-medium uppercase leading-[1]">PERTANYAAN<br />UMUM.</h2></div><div className="flex flex-col gap-2.5">{faqs.map(([question, answer], i) => <div key={question} className="rounded-xl bg-secondary px-5"><Button variant="ghost" aria-expanded={openFaq === i} onClick={() => setOpenFaq(openFaq === i ? null : i)} className="flex h-auto w-full justify-between gap-5 px-0 py-4 text-left hover:bg-transparent md:py-5"><span className="whitespace-normal font-display text-base font-medium md:text-xl">{question}</span><Plus className={`shrink-0 transition-transform ${openFaq === i ? "rotate-45" : ""}`} /></Button>{openFaq === i && <p className="max-w-[560px] pb-5 text-sm leading-[1.8] text-muted-foreground">{answer}</p>}</div>)}</div></div></section>
 

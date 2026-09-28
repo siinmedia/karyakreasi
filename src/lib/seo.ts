@@ -33,9 +33,21 @@ export const BUSINESS = {
   addressLocality: "Jepara",
   addressRegion: "Jawa Tengah",
   addressCountry: "ID",
-  telephone: "",
+  /** Nomor WhatsApp resmi, format internasional tanpa tanda plus. */
+  telephone: "+62 817-6735-788",
+  whatsapp: "628176735788",
   priceRange: "$$",
 } as const;
+
+/** Tautan WhatsApp dengan pesan awal siap kirim. */
+export function whatsappUrl(
+  message = "Halo Karya Kreasi Bersama, saya ingin konsultasi mengenai proyek fabrikasi custom.",
+): string {
+  return `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(message)}`;
+}
+
+/** Nomor telepon dalam format yang enak dibaca manusia. */
+export const PHONE_DISPLAY = BUSINESS.telephone;
 
 /** Susun URL absolut dari sebuah path. */
 export function absoluteUrl(path: string): string {

@@ -8,8 +8,10 @@ import {
   jsonLdScript,
   localBusinessSchema,
   PAKET_USAHA,
+  PHONE_DISPLAY,
   SERVICE_AREAS,
   socialMeta,
+  whatsappUrl,
 } from "@/lib/seo";
 
 const TITLE = "Pabrik Gerobak Jepara & Kudus — Paket Usaha Siap Jualan";
@@ -95,7 +97,9 @@ function PabrikGerobak() {
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <a
-                href="https://api.whatsapp.com/send?text=Halo%20Karya%20Kreasi%20Bersama%2C%20saya%20ingin%20tanya%20soal%20pembuatan%20gerobak%20usaha."
+                href={whatsappUrl(
+                  "Halo Karya Kreasi Bersama, saya ingin tanya soal pembuatan gerobak usaha.",
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 font-display text-xs font-bold uppercase tracking-[0.1em] text-accent-foreground transition-opacity hover:opacity-90"
@@ -111,6 +115,15 @@ function PabrikGerobak() {
                 <ArrowRight size={16} />
               </Link>
             </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              Telepon atau WhatsApp:{" "}
+              <a
+                href={`tel:+${PHONE_DISPLAY.replace(/\D/g, "")}`}
+                className="font-semibold text-foreground underline underline-offset-4"
+              >
+                {PHONE_DISPLAY}
+              </a>
+            </p>
 
             <dl className="mt-14 grid gap-8 border-t border-border pt-10 sm:grid-cols-3">
               <div>

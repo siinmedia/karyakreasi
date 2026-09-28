@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Menu, MessageCircle, Phone, X } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { PHONE_DISPLAY, whatsappUrl } from "@/lib/seo";
 
 export const nav: [string, string][] = [
   ["Tentang", "/#tentang"],
@@ -54,7 +55,7 @@ export function SiteHeader({ tone = "overlay" }: { tone?: "overlay" | "solid" })
             "hidden items-center gap-1 rounded-full border px-2 py-2 text-xs font-semibold shadow-[0_6px_24px_-12px_rgba(0,0,0,.5)] backdrop-blur-xl lg:flex " +
             (solid
               ? "border-border bg-card/95 text-foreground"
-              : "border-line-light bg-charcoal/70 text-overlay-foreground")
+              : "border-overlay-foreground/20 bg-charcoal/90 text-overlay-foreground")
           }
           aria-label="Navigasi utama"
         >
@@ -73,14 +74,24 @@ export function SiteHeader({ tone = "overlay" }: { tone?: "overlay" | "solid" })
           <Link
             to="/portfolio"
             activeProps={{ className: "bg-accent text-accent-foreground" }}
-            className="rounded-full px-4 py-2 font-semibold tracking-[0.01em] text-lime transition-colors hover:bg-overlay-foreground/15 hover:text-overlay-foreground"
+            className={
+              "rounded-full px-4 py-2 font-semibold tracking-[0.01em] transition-colors " +
+              (solid
+                ? "text-foreground hover:bg-secondary"
+                : "text-lime hover:bg-overlay-foreground/20")
+            }
           >
             Portofolio
           </Link>
           <Link
             to="/pabrik-gerobak"
             activeProps={{ className: "bg-accent text-accent-foreground" }}
-            className="rounded-full px-4 py-2 font-semibold tracking-[0.01em] text-lime transition-colors hover:bg-overlay-foreground/15 hover:text-overlay-foreground"
+            className={
+              "rounded-full px-4 py-2 font-semibold tracking-[0.01em] transition-colors " +
+              (solid
+                ? "text-foreground hover:bg-secondary"
+                : "text-lime hover:bg-overlay-foreground/20")
+            }
           >
             Pabrik Gerobak
           </Link>
@@ -176,6 +187,26 @@ export function SiteFooter() {
               <br />
               Jepara, Jawa Tengah
             </p>
+            <ul className="mb-5 flex flex-col gap-2 text-sm">
+              <li>
+                <a
+                  href={`tel:+${PHONE_DISPLAY.replace(/\D/g, "")}`}
+                  className="inline-flex items-center gap-2 hover:text-lime"
+                >
+                  <Phone size={14} /> {PHONE_DISPLAY}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={whatsappUrl()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 hover:text-lime"
+                >
+                  <MessageCircle size={14} /> WhatsApp
+                </a>
+              </li>
+            </ul>
             <a
               href="https://www.google.com/maps/search/?api=1&query=Kdamarjati+Kalinyamatan+Jepara"
               target="_blank"
