@@ -51,6 +51,13 @@ export default defineConfig(({ mode }) => {
       tanstackStart({
         // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
         server: { entry: "server" },
+        // Files under src/routes/ that are not routes: shared data (kota-data.ts,
+        // portfolio-data.ts), shared types, and shared layout components. Without
+        // this the generator warns that each one "does not export a Route".
+        router: {
+          routeFileIgnorePattern:
+            "(kota-data|kota-gerobak-page|portfolio-data|portfolio-types|site-chrome)\\.(ts|tsx)$",
+        },
       }),
       viteReact(),
       tailwindcss(),
